@@ -1,0 +1,269 @@
+h2 {
+  font-family: TTCommons-Regular;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: #f0bf3c;
+}
+.modal-content{
+  border-radius: 50px;
+}
+.table {
+  table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    thead {
+      th {
+        font-weight: 100;
+        color: #929296;
+        vertical-align: bottom;
+        padding: 18px 20px 12px !important;
+        border-bottom: 1px solid #dddee1;
+        border-top: 0;
+        font-family: TTCommons-Regular;
+      }
+    }
+    td {
+      border: none;
+      padding: 0px 0px 0px 0px;
+    }
+  }
+}
+.table td {
+  vertical-align: top;
+  border-top: 0px solid #dee2e6;
+  padding: 0.75rem;
+}
+.table th {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 0px solid #dee2e6;
+  border-bottom: 1px solid #dddee1;
+}
+tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.tbl-border {
+  border: 1px solid #dddee1;
+  border-radius: 16px;
+  padding: 0px;
+  thead {
+    th {
+      display: block;
+      // width: 50%;
+      border-right: 1px solid #dddee1;
+
+      &:last-child() {
+        // width: 55%;
+        text-align: center;
+        border-right: none;
+      }
+    }
+    tr {
+      display: flex;
+      width: 100%;
+    }
+  }
+  tbody {
+    td {
+      display: block;
+      // width: 50%;
+      padding: 18px 20px 12px !important;
+      border-right: 1px solid #dddee1;
+      &:last-child {
+        border-right: none;
+      }
+    }
+    tr {
+      display: flex;
+      width: 100%;
+    }
+  }
+}
+
+.tbl-border tbody tr td:last-child {
+  border-right: 0px;
+}
+
+.tbl-border tbody tr,
+.tbl-border thead tr {
+  display: flex;
+  width: 100%;
+}
+
+.tbl-border thead th,
+.tbl-border tbody td {
+  display: block;
+  width: 100%;
+}
+
+.tbl-border thead th:nth-child(3),
+.tbl-border tbody td:nth-child(3) {
+  // width: 55%;
+  text-align: center;
+}
+
+.tbl-border tbody {
+  display: block;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+@media only screen and (max-width: 991px) {
+  .tbl-border {
+    .table {
+      width: 765px !important;
+      table {
+        overflow-x: scroll;
+        thead {
+          th {
+            &:nth-child(3) {
+              width: 30%;
+            }
+          }
+        }
+        tbody {
+          td {
+            &:nth-child(3) {
+              width: 30%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.modal-dialog {
+  margin-top: 80px;
+  max-width: 40%;
+  .modal-content {
+      border-radius: 50px;
+  }
+  .login {
+      display: flex;
+      justify-content: center;
+      .login-card {
+          background-color: #ffffff;
+          border-radius: 50px;
+          width: 100%;
+          margin-bottom: 50px;
+          .card-body {
+              padding: 20px 0px 20px 0px;
+              h2 {
+                  font-family: TTCommons-Regular;
+                  text-align: center;
+                  font-size: 24px;
+                  font-weight: 600;
+                  color: #f0bf3c;
+              }
+              .login-btn {
+                  font-family: TTCommons-Regular;
+                  border-radius: 10px 10px 0px 0px;
+                  font-style: normal;
+                  font-weight: 600;
+                  font-size: 16px;
+                  line-height: 32px;
+                  width: 100%;
+                  color: #b0b0b0;
+                  border-bottom: 1px solid;
+              }
+              .mt-16 {
+                  margin-top: 16px;
+              }
+              .active {
+                  font-family: TTCommons-Regular;
+                  font-style: normal;
+                  font-weight: bold;
+                  font-size: 36px;
+                  line-height: 48px;
+                  color: #f0bf3c;
+                  margin-bottom: 20px;
+                  border-bottom: 2px solid;
+                  border-radius: 10px 10px 0px 0px;
+                  padding-left: 0px;
+                  padding-right: 0px;
+                  width: 100%;
+              }
+              form {
+                  padding: 20px 30px;
+                  label {
+                      font-family: TTCommons-Regular;
+                      font-style: normal;
+                      font-weight: 600;
+                      color: #000000;
+                  }
+                  span {
+                      border-radius: 0.5rem;
+                      border-top-right-radius: 0;
+                      border-bottom-right-radius: 0;
+                      background: #00ffff00;
+                      padding: 0px 24px;
+                      img {
+                          width: 18px;
+                      }
+                  }
+
+                  .input {
+                      border-radius: 0.5rem;
+                      border-top-left-radius: 0;
+                      border-bottom-left-radius: 0;
+                      padding: 36px 20px;
+                  }
+                  .login-now {
+                      text-align: center;
+                  }
+              }
+              .custom-select-wrapper {
+                  width: 84%;
+                  .drop-arrow {
+                      background-size: 15px 10px;
+                  }
+              }
+              .custom-select-wrapper:after {
+                  right: 14%;
+              }
+          }
+          .img {
+              display: flex;
+              justify-content: center;
+              img {
+                  margin-top: -80px;
+                  width: 200px;
+              }
+          }
+      }
+  }
+}
+.modal-buttons{
+  padding-right: 10px;
+  // margin-top: -60px;
+  margin-bottom: 40px;
+}
+.modal-buttons .btn{
+  color: #f0bf3c;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 1280px){
+  .modal-dialog{
+      max-width: 75%;
+      margin-top: 80px;
+  }
+}
+@media (max-width: 575px){
+  .modal-buttons{
+      justify-content: center !important;
+  }
+}
+@media screen and (max-width: 470px){
+  .modal-dialog{
+      max-width: 100%;
+  }
+}

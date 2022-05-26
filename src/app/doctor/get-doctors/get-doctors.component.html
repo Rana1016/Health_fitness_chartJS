@@ -1,0 +1,340 @@
+<!-- Doctor Name -->
+<div *ngIf="spinner" class="spinners">
+  <mat-spinner></mat-spinner>
+</div>
+<div
+  class="modal fade"
+  id="doctorName"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog doctorName" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <button
+          type="button"
+          class="close"
+          (click)="closeModal()"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <h5>Please enter the doctor's names below:</h5>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group doctor-search position-relative">
+              <form class="example-form">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <input
+                    type="text"
+                    placeholder="Search Doctor"
+                    matInput
+                    [formControl]="doctorName"
+                    [matAutocomplete]="auto2"
+                  />
+                  <mat-icon>search</mat-icon>
+                  <mat-autocomplete #auto2="matAutocomplete">
+                    <mat-option
+                      *ngFor="let doctor of filteredValues"
+                      [value]="doctor.name"
+                      #matOption
+                      (click)="getDoctor(matOption)"
+                    >
+                      {{ doctor.name }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                <div class="new-user-add" *ngIf="noDoctor">
+                  <i
+                    class="ml-3 message_icon doctor_icon fa fa-user-plus"
+                    src=""
+                    width="30"
+                    height="30"
+                    style="
+                      margin-left: 10px !important;
+                      color: #f0bf3c;
+                      font-size: 24px;
+                      cursor: pointer;
+                    "
+                    aria-hidden="true"
+                    (click)="setAddNewDoctor()"
+                  >
+                  </i>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-12 mt-3" id="table_change">
+            <div class="tbl-border table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="br-1 table_date">Doctor Name</th>
+                    <th class="br-1 table_coach">Type</th>
+                    <th class="br-1 table_notes">Clinic Location</th>
+                    <th class="br-1 head_custom border-right-0">Update</th>
+                  </tr>
+                </thead>
+                <tbody id="style-3" class="tbody">
+                  <tr>
+                    <td colspan="3" class="w-100">
+                      <div class="doctor-table">
+                        <table *ngIf="!spinner">
+                          <tr *ngFor="let doctor of memDoctors">
+                            <td class="br-1 table_date padding">
+                              {{ doctor.name }}
+                            </td>
+
+                            <td
+                              class="br-1 table_notes padding"
+                              style="overflow: hidden; overflow-wrap: anywhere"
+                            >
+                              {{ doctor.doctor_type }}
+                            </td>
+                            <td
+                              class="br-1 table_notes padding"
+                              style="overflow: hidden; overflow-wrap: anywhere"
+                            >
+                              {{ doctor.clinical_location }}
+                            </td>
+                            <td class="br-1 edit_exit_btns padding">
+                              <button
+                                class="mt-2 btn btn-outline-danger"
+                                type="button"
+                                data-toggle="modal"
+                                (click)="setDoctorObj(doctor)"
+                              >
+                                X
+                              </button>
+                              <button
+                                class="mt-2 ml-custom btn btn-outline-primary"
+                                type="button"
+                                data-toggle="modal"
+                                (click)="setDoctorProfile(doctor)"
+                              >
+                                <i class="fa fa-pencil"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Doctor -->
+<div
+  class="modal fade"
+  id="addNewDoctor"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog doctorName addNewUser" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <h5>{{ formTitle }}</h5>
+        <div class="login">
+          <div class="login-card mb-0">
+            <div class="card-body p-0">
+              <form [formGroup]="doctorForm" (submit)="updateDoctor()">
+                <div class="text-left">
+                  <label for="sel1">First Name</label>
+                </div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/user.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control input"
+                    placeholder="First Name"
+                    style="border-color: #ced4da !important"
+                    formControlName="firstName"
+                    [ngClass]="{
+                      'is-invalid': submitted && doctorFormData.firstName.errors
+                    }"
+                  />
+                  <div class="invalid-feedback text-left">
+                    <div>First Name is required</div>
+                  </div>
+                </div>
+                <div class="text-left">
+                  <label for="sel1">Last Name</label>
+                </div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/user.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control input"
+                    placeholder="Last Name"
+                    style="border-color: #ced4da !important"
+                    formControlName="lastName"
+                    [ngClass]="{
+                      'is-invalid': submitted && doctorFormData.lastName.errors
+                    }"
+                  />
+                  <div class="invalid-feedback text-left">
+                    <div>Last Name is required</div>
+                  </div>
+                </div>
+                <div class="text-left">
+                  <label for="sel1">Type</label>
+                </div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/user.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control input"
+                    placeholder="Type"
+                    style="border-color: #ced4da !important"
+                    formControlName="type"
+                    
+                  />
+                  
+                </div>
+                <div class="text-left">
+                  <label for="sel1">Clinic Location</label>
+                </div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/user.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control input"
+                    placeholder="Clinic Location"
+                    style="border-color: #ced4da !important"
+                    formControlName="clinicLocation"
+                    
+                  />
+                  
+                </div>
+                <div class="row mt-4 mb-3">
+                  <div class="col-12">
+                    <button
+                      type="submit"
+                      class="btn text-white py-3 w-100 update-doctor"
+                    >
+                      {{ btnTitle }}
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Member -->
+<div
+  class="modal fade"
+  id="setDoctor"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 0px !important">
+      <div class="modal-body text-center" *ngIf="doctorObj">
+        <h5 *ngIf="doctorObj">
+          Are you sure you want to bind Dr. {{ doctorObj.name }} to this member?
+        </h5>
+      </div>
+      <div class="modal-footer mx-auto" style="border-top: none">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          (click)="setDoctor()"
+          data-dismiss="modal"
+        >
+          Yes
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          data-dismiss="modal"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="deleteDoctor"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 0px !important">
+      <div class="modal-body text-center" *ngIf="doctorObj">
+        <h5>
+          Are you sure you want to unbind Dr. {{ doctorObj.name }} to this
+          member?
+        </h5>
+      </div>
+      <div class="modal-footer mx-auto" style="border-top: none">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          data-dismiss="modal"
+          (click)="removeDoctor()"
+        >
+          Yes
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          data-dismiss="modal"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

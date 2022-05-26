@@ -1,0 +1,156 @@
+<div class="container">
+  <form [formGroup]="automationForm" (submit)="validate()">
+    <div class="form-group row">
+      <label for="location-name" class="col-md-3 mt-2 col-form-label"
+        >Enter Dr Automation Name</label
+      >
+      <div class="col-md-7 mt-2">
+        <input
+          type="text"
+          class="form-control"
+          id="automation-name"
+          formControlName="automationName"
+          placeholder="Enter Dr Automation Name"
+          [ngClass]="{
+            'is-invalid': submitForm && automationFormData.automationName.errors
+          }"
+        />
+        <div class="invalid-feedback">
+          <div>Dr Automation Name is required</div>
+        </div>
+      </div>
+      <div class="col-md-2 mt-2">
+        <button class="btn btn-primary">Validate</button>
+      </div>
+    </div>
+  </form>
+  <div class="row mt-5" *ngIf="resultsFound">
+    <div class="col-12" id="table_change">
+      <div class="tbl-border table-responsive">
+        <div class="table mb-0">
+          <table class="mb-0">
+            <thead>
+              <tr>
+                <th class="br-1">Automation Name</th>
+                <th class="br-1">Status</th>
+                <th class="head_custom">Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ currentAutomationName}}</td>
+                <td>Verified</td>
+                <td>
+                  <button
+                    class="btn btn-outline-danger"
+                    data-toggle="modal"
+                    data-target="#automationDelete"
+                  >
+                    X
+                  </button>
+                  <button
+                    data-toggle="modal"
+                    data-target="#manageSiteUpdate"
+                    class="btn btn-outline-primary ml-2"
+                    (click)="setAutomationData()"
+                  >
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="manageSiteUpdate"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <div class="login">
+          <div class="login-card">
+            <div class="card-body">
+              <h2>Update Dr Automation Name</h2>
+              <form
+                [formGroup]="updateAutomationForm"
+                (submit)="updateAutomatioData()"
+              >
+                <div class="form-group row">
+                  <label
+                    for="location-name"
+                    class="col-md-4 mt-2 col-form-label"
+                    >Enter Dr Automation Name</label
+                  >
+                  <div class="col-md-8 mt-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="automation-name"
+                      formControlName="automationName"
+                      placeholder="Enter Dr Automation Name"
+                      [ngClass]="{
+                        'is-invalid':
+                          submitForm &&
+                          updateAutomationFormData.automationName.errors
+                      }"
+                    />
+                    <div class="invalid-feedback">
+                      <div>Dr Automation Name is required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group btn-pos">
+                  <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- automationDelete -->
+<div
+  class="modal fade"
+  id="automationDelete"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 0px !important">
+      <div class="modal-body text-center">
+        <h5>Are you sure you want to delete this automation?</h5>
+      </div>
+      <div class="modal-footer mx-auto" style="border-top: none">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          (click)="deleteAutomationData()"
+          data-dismiss="modal"
+        >
+          Yes
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          data-dismiss="modal"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

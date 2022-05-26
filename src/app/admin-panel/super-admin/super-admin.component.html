@@ -1,0 +1,261 @@
+<div class="container">
+  <form [formGroup]="superAdminForm" (submit)="handleFormSubmit()">
+    <div class="form-group row">
+      <label for="location-name" class="col-sm-2 col-form-label"
+        >Location Name</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="location-name"
+          placeholder="Location Name"
+          formControlName="locationName"
+          [ngClass]="{
+            'is-invalid': submitForm && superAdminFormData.locationName.errors
+          }"
+        />
+        <div class="invalid-feedback">
+          <div>Location Name is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="time-zone" class="col-sm-2 col-form-label"
+        >Time Zone</label
+      >
+      <div class="col-sm-10">
+        <select
+          class="form-control"
+          id="time-zone"
+          formControlName="timeZone">
+          <option value="US/Central">US/Central</option>
+          <option value="US/Eastern">US/Eastern</option>
+          <option value="US/Mountain">US/Mountain</option>
+          <option value="US/Pacific">US/Pacific</option>
+          <option value="UTC">UTC</option>
+        </select>
+        
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="first-name" class="col-sm-2 col-form-label"
+        >Location Admin Firstname</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="first-name"
+          placeholder="Location Admin Firstname"
+          formControlName="firstName"
+          [ngClass]="{
+            'is-invalid': submitForm && superAdminFormData.firstName.errors
+          }"
+        />
+        <div class="invalid-feedback">
+          <div>Location Admin FirstName is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="last-name" class="col-sm-2 col-form-label"
+        >Location Admin Lastname</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="last-name"
+          placeholder="Location Admin Lastname"
+          formControlName="lastName"
+          [ngClass]="{
+            'is-invalid': submitForm && superAdminFormData.lastName.errors
+          }"
+        />
+        <div class="invalid-feedback">
+          <div>Location Admin LastName is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="email-address" class="col-sm-2 col-form-label"
+        >Location Admin Email Address</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="email"
+          class="form-control"
+          id="email-address"
+          placeholder="Location Admin Email Address"
+          formControlName="emailAddress"
+          [ngClass]="{
+            'is-invalid': submitForm && superAdminFormData.emailAddress.errors
+          }"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="submitForm && superAdminFormData.emailAddress.errors"
+        >
+          <div *ngIf="superAdminFormData.emailAddress.errors.required">
+            Location Admin Email Address is required
+          </div>
+          <div *ngIf="superAdminFormData.emailAddress.errors.pattern">
+            Must be valid Email Address
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="password" class="col-sm-2 col-form-label"
+        >Location Admin Password</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          placeholder="Location Admin Password"
+          autocomplete="new-password"
+          formControlName="password"
+          [ngClass]="{
+            'is-invalid': submitForm && superAdminFormData.password.errors
+          }"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="submitForm && superAdminFormData.password.errors"
+        >
+          <div *ngIf="superAdminFormData.password.errors.required">
+            Location Admin Password is required
+          </div>
+          <div *ngIf="superAdminFormData.password.errors.minlength">
+            Password must be atleast 6 characters
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="phone-number" class="col-sm-2 col-form-label"
+        >Location Admin Phone Number</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="phone-number"
+          placeholder="Location Admin Phone Number"
+          formControlName="phoneNumber"
+          [ngClass]="{
+            'is-invalid': submitForm && superAdminFormData.phoneNumber.errors
+          }"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="superAdminFormData && superAdminFormData.phoneNumber.errors"
+        >
+          <div *ngIf="superAdminFormData.phoneNumber.errors.required">
+            Location Admin Phone Number is required
+          </div>
+          <div *ngIf="superAdminFormData.phoneNumber.errors.pattern">
+            Pattern: xxx-xxx-xxxx
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="email-address" class="col-sm-2 col-form-label"
+        >Location Admin DOB</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="date"
+          class="form-control"
+          id="Location Admin-dob"
+          placeholder="Location Admin DOB"
+          formControlName="dob"
+          [ngClass]="{
+            'is-invalid': submitForm && superAdminFormData.dob.errors
+          }"
+        />
+        <div class="invalid-feedback">
+          <div>Location Admin DOB is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="api-key" class="col-sm-2 col-form-label"
+        >ActiveCampaign API Key</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="api-key"
+          placeholder="ActiveCampaign API Key"
+          formControlName="api_key"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="api-key" class="col-sm-2 col-form-label"
+        >ActiveCampaign BaseUrl</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="base-url"
+          placeholder="ActiveCampaign BaseUrl"
+          formControlName="base_url"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="api-url" class="col-sm-2 col-form-label"
+        >ActiveCampaign API Url</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="api-url"
+          placeholder="ActiveCampaign API Url"
+          formControlName="api_url"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="acuity-key" class="col-sm-2 col-form-label"
+        >Acuity Key</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="acuity-key"
+          placeholder="Acuity Key"
+          formControlName="acuity_key"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="acuity-user-id" class="col-sm-2 col-form-label"
+        >Acuity UserID</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="acuity-user-id"
+          placeholder="Acuity UserID"
+          formControlName="acuity_user_id"
+        />
+      </div>
+    </div>
+    <div class="text-center mt-2">
+      <button class="btn btn-primary btn-lg">Submit</button>
+    </div>
+  </form>
+</div>

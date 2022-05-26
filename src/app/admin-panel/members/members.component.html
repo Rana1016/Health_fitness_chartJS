@@ -1,0 +1,606 @@
+<div class="container">
+  <div *ngIf="spinner" class="spinners">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div class="modal-buttons pb-3 d-flex justify-content-end">
+    <button
+      class="btn"
+      data-toggle="modal"
+      data-target="#addMember"
+      (click)="createNew(1)"
+    >
+      + Member
+    </button>
+    <button
+      class="btn"
+      data-toggle="modal"
+      data-target="#addMember"
+      (click)="createNew(0)"
+    >
+      + Coach
+    </button>
+  </div>
+
+  <div class="row">
+    <div class="col-12 px-4">
+      <div class="table">
+        <table
+          datatable
+          [dtOptions]="dtOptions"
+          [dtTrigger]="dtTrigger"
+          class="row-border hover table table-bordered member-table"
+          style="border-bottom: 1px solid #dee2e6"
+        >
+          <thead>
+            <tr>
+              <th class="table_name">Name</th>
+              <th class="table_email">Email</th>
+              <th class="table_update">Update</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let member of members; let i = index">
+              <td class="table_name">
+                <a routerLink="/user/{{ member.get_email }}">{{
+                  member.name
+                }}</a>
+              </td>
+              <td class="table_email">
+                <a href="mailto:{{ member.get_email }}">{{
+                  member.get_email
+                }}</a>
+              </td>
+              <td class="table_update">
+                <button
+                  class="btn btn-outline-danger"
+                  type="button"
+                  (click)="getMemberId(member.id)"
+                  data-toggle="modal"
+                  data-target="#deleteMember"
+                >
+                  X
+                </button>
+                <button
+                  class="btn btn-outline-primary ml-3"
+                  type="button"
+                  (click)="getMemberObj(member, i)"
+                  data-toggle="modal"
+                  data-target="#Update"
+                >
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Member -->
+<div
+  class="modal fade"
+  id="deleteMember"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 0px !important">
+      <div class="modal-body text-center">
+        <h5>Are you sure you want to delete this member?</h5>
+      </div>
+      <div class="modal-footer mx-auto" style="border-top: none">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          (click)="delete_member()"
+          data-dismiss="modal"
+        >
+          Yes
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          data-dismiss="modal"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UpdateMember -->
+<div
+  class="modal fade"
+  id="Update"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="login">
+          <div class="login-card">
+            <!-- <div class="img">
+                            <img src="./../../../assets/images/login-img.png" />
+                        </div> -->
+            <div class="card-body">
+              <h2>Update a user</h2>
+              <!-- <div class="alert alert-danger text-center" *ngIf = "addMemberError != null">
+                                <strong>{{addMemberError}}</strong>
+                            </div> -->
+              <form [formGroup]="updateMemberForm" (submit)="updateUser()">
+                <div><label for="sel1">First Name</label></div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/user.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control input"
+                    placeholder="First Name"
+                    formControlName="get_first_name"
+                    [ngClass]="{
+                      'is-invalid':
+                        submitted && updateMemberFormData.get_first_name.errors
+                    }"
+                    style="border-color: #ced4da !important"
+                  />
+                  <div class="invalid-feedback">
+                    <div>First Name is required</div>
+                  </div>
+                </div>
+                <div><label for="sel1">Last Name</label></div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/user.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control input"
+                    value=""
+                    placeholder="Last Name"
+                    formControlName="get_last_name"
+                    [ngClass]="{
+                      'is-invalid':
+                        submitted && updateMemberFormData.get_last_name.errors
+                    }"
+                    style="border-color: #ced4da !important"
+                  />
+                  <div class="invalid-feedback">
+                    <div>Last Name is required</div>
+                  </div>
+                </div>
+
+                <div><label for="sel1">Profile Picture</label></div>
+                <div class="input-group form-group row">
+                  <div class="col-lg-6 col-xs-12">
+                    <img class="dp rounded img-responsive mb-2" [src]="url2" />
+                  </div>
+                  <div class="col-lg-6 col-xs-12">
+                    <div *ngIf="updateImage">
+                      <image-cropper
+                        [imageChangedEvent]="imageChangedEvent"
+                        [maintainAspectRatio]="true"
+                        [aspectRatio]="1 / 1"
+                        (imageCropped)="imageCropped($event)"
+                        (imageLoaded)="imageLoaded()"
+                        (cropperReady)="cropperReady()"
+                        (loadImageFailed)="loadImageFailed()"
+                      >
+                      </image-cropper>
+                      <div *ngIf="imageEditing" class="my-3">
+                        <button class="btn btn-primary" (click)="CropImage()">
+                          Crop
+                        </button>
+                      </div>
+                    </div>
+                    <input
+                      #inputFile
+                      class="mt-3"
+                      type="file"
+                      id="image_cropper_changer"
+                      (change)="fileChangeEvent($event, 'update', inputFile)"
+                    />
+                    <!-- <input type="file" class=" input" ng-model="example.value"
+                                            (change)="onSelectFile($event)" style="border-color: #ced4da !important;" /> -->
+                  </div>
+                </div>
+
+                <div><label for="sel1">Phone Number</label></div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/smartphone.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control input"
+                    placeholder="xxx-xxx-xxxx"
+                    formControlName="phone_number"
+                    [ngClass]="{
+                      'is-invalid':
+                        submitted && updateMemberFormData.phone_number.errors
+                    }"
+                    style="border-color: #ced4da !important"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="
+                      submitted && updateMemberFormData.phone_number.errors
+                    "
+                  >
+                    <div
+                      *ngIf="updateMemberFormData.phone_number.errors.required"
+                    >
+                      Phone Number is required
+                    </div>
+                    <div
+                      *ngIf="updateMemberFormData.phone_number.errors.pattern"
+                    >
+                      Pattern: xxx-xxx-xxxx
+                    </div>
+                  </div>
+                </div>
+                <div><label for="sel1">Date of Birth</label></div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/user.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="date"
+                    class="form-control input"
+                    value=""
+                    placeholder="Date of Birth"
+                    formControlName="dob"
+                    style="border-color: #ced4da !important"
+                  />
+                </div>
+                <div><label for="sel1">Email:</label></div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/mail.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="email"
+                    class="form-control input"
+                    placeholder="Example123@gmail.com"
+                    formControlName="get_email"
+                    autocomplete="new-password"
+                    [ngClass]="{
+                      'is-invalid':
+                        submitted && updateMemberFormData.get_email.errors
+                    }"
+                    style="border-color: #ced4da !important"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="submitted && updateMemberFormData.get_email.errors"
+                  >
+                    <div *ngIf="updateMemberFormData.get_email.errors.required">
+                      Email is required
+                    </div>
+                    <div *ngIf="updateMemberFormData.get_email.errors.pattern">
+                      Must be valid Email Address
+                    </div>
+                  </div>
+                </div>
+                <div><label for="sel1">Enter Password:</label></div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/lock.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="password"
+                    class="form-control input"
+                    placeholder="*********"
+                    formControlName="password"
+                    autocomplete="new-password"
+                    [ngClass]="{
+                      'is-invalid': submitted && updateMemberFormData.password.errors
+                    }"
+                    style="border-color: #ced4da !important"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="submitted && updateMemberFormData.password.errors"
+                  >
+                    <div *ngIf="updateMemberFormData.password.errors.minlength">
+                      Password must be atleast 6 characters
+                    </div>
+                  </div>
+                </div>
+                <div><label for="sel1">CheckIn Count:</label></div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/user.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control input"
+                    placeholder="0"
+                    [(ngModel)]="update_note_count"
+                    [ngModelOptions]="{ standalone: true }"
+                    style="border-color: #ced4da !important"
+                  />
+                  
+                </div>
+                <div class="custom-control custom-checkbox mr-sm-2">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    [(ngModel)]="user_role"
+                    [ngModelOptions]="{ standalone: true }"
+                    id="user_role_checkbox"
+                  />
+                  <label class="custom-control-label" for="user_role_checkbox">
+                    <p style="margin: 4px 1rem">Is Coach?</p>
+                  </label>
+                </div>
+
+                <div class="form-group btn-pos">
+                  <button
+                    class="btn w-100 login-now"
+                    type="submit"
+                    value="login"
+                  >
+                    Update Member Now
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AddMember -->
+<div
+  class="modal fade"
+  id="addMember"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="login">
+          <div class="login-card">
+            <!-- <div class="img">
+                            <img src="./../../../assets/images/login-img.png" />
+                        </div> -->
+            <div class="card-body">
+              <h2>{{ formTitle }}</h2>
+              <div
+                class="alert alert-danger text-center"
+                *ngIf="addMemberError != null"
+              >
+                <strong>{{ addMemberError }}</strong>
+              </div>
+              <form [formGroup]="memberForm" (submit)="addMembers()">
+                <div><label for="sel1">First Name</label></div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/user.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control input"
+                    placeholder="First Name"
+                    formControlName="firstName"
+                    [ngClass]="{
+                      'is-invalid': submitted && memberFormData.firstName.errors
+                    }"
+                    style="border-color: #ced4da !important"
+                  />
+                  <div class="invalid-feedback">
+                    <div>First Name is required</div>
+                  </div>
+                </div>
+                <div><label for="sel1">Last Name</label></div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/user.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control input"
+                    value=""
+                    placeholder="Last Name"
+                    formControlName="lastName"
+                    [ngClass]="{
+                      'is-invalid': submitted && memberFormData.lastName.errors
+                    }"
+                    style="border-color: #ced4da !important"
+                  />
+                  <div class="invalid-feedback">
+                    <div>Last Name is required</div>
+                  </div>
+                </div>
+
+                <div><label for="sel1">Profile Picture</label></div>
+                <div class="input-group form-group row">
+                  <div class="col-lg-6 col-xs-12">
+                    <img class="dp rounded img-responsive mb-2" [src]="url2" />
+                  </div>
+                  <div class="col-lg-6 col-xs-12">
+                    <div *ngIf="updateImage">
+                      <image-cropper
+                        [imageChangedEvent]="imageChangedEvent"
+                        [maintainAspectRatio]="true"
+                        [aspectRatio]="1 / 1"
+                        (imageCropped)="imageCropped($event)"
+                        (imageLoaded)="imageLoaded()"
+                        (cropperReady)="cropperReady()"
+                        (loadImageFailed)="loadImageFailed()"
+                      >
+                      </image-cropper>
+                      <div *ngIf="imageEditing" class="my-3">
+                        <button class="btn btn-primary" (click)="CropImage()">
+                          Crop
+                        </button>
+                      </div>
+                    </div>
+                    <input
+                      #inputFile2
+                      class="mt-3"
+                      type="file"
+                      id="image_cropper_changer"
+                      (change)="fileChangeEvent($event, 'update', inputFile2)"
+                    />
+                    <!-- <input type="file" class=" input" ng-model="example.value"
+                                            (change)="onSelectFile($event)" style="border-color: #ced4da !important;" /> -->
+                  </div>
+                </div>
+
+                <div><label for="sel1">Phone Number</label></div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/smartphone.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control input"
+                    placeholder="xxx-xxx-xxxx"
+                    formControlName="phoneNumber"
+                    [ngClass]="{
+                      'is-invalid':
+                        submitted && memberFormData.phoneNumber.errors
+                    }"
+                    style="border-color: #ced4da !important"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="submitted && memberFormData.phoneNumber.errors"
+                  >
+                    <div *ngIf="memberFormData.phoneNumber.errors.required">
+                      Phone Number is required
+                    </div>
+                    <div *ngIf="memberFormData.phoneNumber.errors.pattern">
+                      Pattern: xxx-xxx-xxxx
+                    </div>
+                  </div>
+                </div>
+                <div><label for="sel1">Date of Birth</label></div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/user.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="date"
+                    class="form-control input"
+                    value=""
+                    placeholder="Date of Birth"
+                    formControlName="dob"
+                    style="border-color: #ced4da !important"
+                  />
+                </div>
+                <div><label for="sel1">Email:</label></div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/mail.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="email"
+                    class="form-control input"
+                    placeholder="Example123@gmail.com"
+                    formControlName="userName"
+                    autocomplete="new-password"
+                    [ngClass]="{
+                      'is-invalid': submitted && memberFormData.userName.errors
+                    }"
+                    style="border-color: #ced4da !important"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="submitted && memberFormData.userName.errors"
+                  >
+                    <div *ngIf="memberFormData.userName.errors.required">
+                      Email is required
+                    </div>
+                    <div *ngIf="memberFormData.userName.errors.pattern">
+                      Must be valid Email Address
+                    </div>
+                  </div>
+                </div>
+                <div><label for="sel1">Enter Password:</label></div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><img src="./../../../assets/images/lock.png"
+                    /></span>
+                  </div>
+                  <input
+                    type="password"
+                    class="form-control input"
+                    placeholder="*********"
+                    formControlName="password"
+                    autocomplete="new-password"
+                    [ngClass]="{
+                      'is-invalid': submitted && memberFormData.password.errors
+                    }"
+                    style="border-color: #ced4da !important"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="submitted && memberFormData.password.errors"
+                  >
+                    <div *ngIf="memberFormData.password.errors.required">
+                      Password is required
+                    </div>
+                    <div *ngIf="memberFormData.password.errors.minlength">
+                      Password must be atleast 6 characters
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group btn-pos">
+                  <button
+                    class="btn w-100 login-now"
+                    type="submit"
+                    value="login"
+                  >
+                    {{ formBtn }}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

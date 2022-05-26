@@ -1,0 +1,239 @@
+.spinners {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.spinners ::ng-deep .mat-progress-spinner circle, .mat-spinner circle{
+    stroke: #f0bf3c !important;
+}
+table{
+    border-radius: 20px;
+    overflow: hidden;
+    &.dataTable{
+        thead{
+            tr{
+                th{
+                    border-bottom: 1px solid #dee2e6;
+                    border-top: 0;
+                    width: 100% !important;
+                }
+            }
+        } 
+    }
+    th{
+        padding: 18px 20px 12px;
+        width: 100% !important;
+    }
+    td{
+        border: 0;
+        padding: 18px 20px 12px;
+        width: 100% !important;
+    }
+    .table_name{
+        // width: 25% !important;
+        border-right: 1px solid #dee2e6;
+        border-left: 0;
+        width: 100% !important;
+    }
+    .table_email{
+        // width: 50% !important;
+        border-right: 1px solid #dee2e6;
+        border-left: 0;
+        width: 100% !important;
+    }
+    .table_update{
+        // width: 25%;
+        border-right: 0;
+        border-left: 0;
+        display: flex;
+        width: 100% !important;
+    }
+}
+.modal-dialog {
+    margin-top: 80px;
+    max-width: 40%;
+    .modal-content {
+        border-radius: 50px;
+    }
+    .login {
+        display: flex;
+        justify-content: center;
+        .login-card {
+            background-color: #ffffff;
+            border-radius: 50px;
+            width: 100%;
+            margin-bottom: 50px;
+            .card-body {
+                padding: 20px 0px 20px 0px;
+                h2 {
+                    font-family: TTCommons-Regular;
+                    text-align: center;
+                    font-size: 24px;
+                    font-weight: 600;
+                    color: #f0bf3c;
+                }
+                .login-btn {
+                    font-family: TTCommons-Regular;
+                    border-radius: 10px 10px 0px 0px;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 16px;
+                    line-height: 32px;
+                    width: 100%;
+                    color: #b0b0b0;
+                    border-bottom: 1px solid;
+                }
+                .mt-16 {
+                    margin-top: 16px;
+                }
+                .active {
+                    font-family: TTCommons-Regular;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 36px;
+                    line-height: 48px;
+                    color: #f0bf3c;
+                    margin-bottom: 20px;
+                    border-bottom: 2px solid;
+                    border-radius: 10px 10px 0px 0px;
+                    padding-left: 0px;
+                    padding-right: 0px;
+                    width: 100%;
+                }
+                form {
+                    padding: 20px 30px;
+                    label {
+                        font-family: TTCommons-Regular;
+                        font-style: normal;
+                        font-weight: 600;
+                        color: #000000;
+                    }
+                    span {
+                        border-radius: 0.5rem;
+                        border-top-right-radius: 0;
+                        border-bottom-right-radius: 0;
+                        background: #00ffff00;
+                        padding: 0px 24px;
+                        img {
+                            width: 18px;
+                        }
+                    }
+
+                    .input {
+                        border-radius: 0.5rem;
+                        border-top-left-radius: 0;
+                        border-bottom-left-radius: 0;
+                        padding: 36px 20px;
+                    }
+                    .login-now {
+                        text-align: center;
+                    }
+                }
+                .custom-select-wrapper {
+                    width: 84%;
+                    .drop-arrow {
+                        background-size: 15px 10px;
+                    }
+                }
+                .custom-select-wrapper:after {
+                    right: 14%;
+                }
+            }
+            .img {
+                display: flex;
+                justify-content: center;
+                img {
+                    margin-top: -80px;
+                    width: 200px;
+                }
+            }
+        }
+    }
+}
+.input-group {
+    .dp{
+        max-height: 150px;
+    }
+}
+.login-now{
+    background: #f0bf3c;
+    color: #ffffff;
+    border-radius: 10px;
+    margin-top: 30px;
+    padding: 26px 40px;
+    font-size: 24px;
+}
+.custom-control-input {
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    width: 1rem;
+    height: 1.25rem;
+    opacity: 0;
+}
+.custom-control input:checked ~ .custom-control-label::before{
+    background-color: #21df6d;
+    border-color: #21df6d;
+    width: 1rem;
+    height: 1rem;
+    box-shadow: unset;
+}
+.custom-control-label::before{
+    top: .48rem;
+}
+.custom-control-label::after {
+    top: 0.48rem;
+    box-shadow: unset;
+}
+.custom-control-input:focus, .custom-control-input:active{
+    box-shadow:unset;
+}
+.modal-buttons{
+    padding-right: 10px;
+    // margin-top: -60px;
+    margin-bottom: 40px;
+}
+.modal-buttons .btn{
+    color: #f0bf3c;
+    font-size: 18px;
+    font-weight: 600;
+}
+.btn:focus{
+    box-shadow: unset;
+}
+@media screen and (max-width: 1280px){
+    .modal-dialog{
+        max-width: 75%;
+        margin-top: 80px;
+    }
+}
+@media (max-width: 767px){
+    .table{
+        overflow-x: scroll;
+        table{
+            width: 515px;
+            overflow: hidden;
+        }
+    }
+}
+@media (max-width: 575px){
+    .modal-buttons{
+        justify-content: center !important;
+    }
+}
+@media screen and (max-width: 470px){
+    .modal-dialog{
+        max-width: 100%;
+    }
+}
+input[type='file'] {
+    color: transparent;
+  }

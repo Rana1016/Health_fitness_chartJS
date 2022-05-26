@@ -1,0 +1,47 @@
+.carousel-control-prev{
+    height: 100px;
+    width: 100px;
+    outline: #000;
+    background-size: 100%,100%;
+    background-image: none;
+}
+.carousel-control-prev-icon:after {
+    content: "<";
+    font-size: 55px;
+    color: #000;
+}
+.carousel-control-next{
+    height: 100px;
+    width: 100px;
+    outline: #000;
+    background-size: 100%,100%;
+    background-image: none;
+}
+.carousel-control-next-icon:after {
+    content: ">";
+    font-size: 55px;
+    color: #000;
+}
+.carousel-indicators{
+    position: static;
+    margin-top: 20px;
+    li{
+        width: auto;
+        a{
+            img{
+                display: block;
+            }
+        }
+    }
+}
+
+.modal-dialog{
+    margin-top: 80px;
+    max-width: 40%;
+}
+@media screen and (min-width: 1024px) and (max-width: 1280px){
+.modal-dialog {
+    margin-top: 80px;
+    max-width: 75%;
+    }
+}

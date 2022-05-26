@@ -1,0 +1,2028 @@
+<div>
+  <div class="row mt-5 ml-4">
+    <div class="col-12">
+      <div class="d-flex align-items-center col-12">
+        <p class="mr-auto mb-0 notes">Highlighted Notes</p>
+        <button type="button" (click)="hideTable = !hideTable"  class="collapse-btn btn btn-primary d-flex align-items-center">{{hideTable ? 'Show Highlighted Notes' : 'Hide Highlighted Notes'}}
+          <i class="fa"  [ngClass]="hideTable ? 'fa-angle-down' : 'fa-angle-up'"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- <div *ngIf="spinner" class="spinners">
+    <mat-spinner></mat-spinner>
+  </div> -->
+  <div class="row tab-data">
+    <div class="col-12" id="table_change" [ngClass]="{
+      'd-none':
+        hideTable
+    }">
+      <div class="tbl-border table-responsive">
+        <div class="table">
+          <table>
+            <thead>
+              <tr>
+                <th class="br-1 table_date">Date</th>
+                <th class="br-1 table_coach">Coach</th>
+                <th class="br-1 table_notes">Notes</th>
+                <th class="head_custom">Update</th>
+              </tr>
+            </thead>
+            <tbody id="style-3" class="tbody">
+              <tr>
+                <td colspan="3" class="w-100">
+                  <div class="doctor-table">
+                    <table>
+                      <tr
+                        *ngFor="
+                          let highlightedNote of highlightedNotes;
+                          let i = index
+                        "
+                      >
+                        <td class="br-1 padding table_date">
+                          {{ highlightedNote.created | date }}
+                        </td>
+                        <td class="br-1 padding table_coach">
+                          {{ highlightedNote.coach_name }}
+                        </td>
+                        <td
+                          class="br-1 padding"
+                          style="
+                            overflow: hidden;
+                            overflow-wrap: anywhere;
+                            white-space: pre-line;
+                          "
+                          width="76%"
+                        >
+                          {{ highlightedNote.text }}
+                        </td>
+                        <td class="br-1 padding edit_exit_btns">
+                          <button
+                            class="btn btn-outline-danger mt-2"
+                            type="button"
+                            data-toggle="modal"
+                            (click)="getHighlightedNoteId(highlightedNote.id)"
+                            data-target="#deleteHighlightedNote"
+                          >
+                            X
+                          </button>
+                          <button
+                            style="margin-left: 10px"
+                            class="mt-2 ml-custom btn btn-outline-primary"
+                            type="button"
+                            (click)="
+                              getNote1(
+                                highlightedNote.id,
+                                highlightedNote.created,
+                                highlightedNote.text,
+                                highlightedNote.coach_name
+                              )
+                            "
+                            data-toggle="modal"
+                            data-target="#demo-edit3"
+                          >
+                            Edit
+                          </button>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container pb-5">
+    <div class="d-flex justify-content-center">
+      <a href="javascript:;" class="display-2" (click)="play()" *ngIf="!beep">
+        <img
+          src="../../../assets/images/x3- Playbutton.png"
+          width="70px"
+          height="70px"
+        />
+      </a>
+      <a href="javascript:;" class="display-2" (click)="stop()" *ngIf="beep">
+        <img
+          src="../../../assets/images/x3-stopbutton.png"
+          width="70px"
+          height="70px"
+        />
+      </a>
+      <h2 class="my-auto ml-3 f-22 font-weight-bold">X3 Audio Cues</h2>
+    </div>
+    <div
+      class="d-flex"
+      [ngClass]="flex ? 'flex-column-reverse' : 'flex-column'"
+    >
+      <form [formGroup]="progress" (submit)="handleProgressForm()">
+        <div class="row push_day my-5 mx-0">
+          <div class="col-lg-4 col-md-6 mx-auto col-sm-12">
+            <h2>Chest Press</h2>
+            <div class="form-data">
+              <div class="line-one">
+                <p>band</p>
+                <select
+                  class="custom-select drop-arrow border-black"
+                  formControlName="chest_press_band"
+                >
+                  <option value="0">
+                    Orange
+                    <div
+                      *ngIf="progress.value.chest_press_band > 0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="0.5">
+                    Orange(w)
+                    <div
+                      *ngIf="progress.value.chest_press_band > 0.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.0">
+                    Red/Purple
+                    <div
+                      *ngIf="progress.value.chest_press_band > 1.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.5">
+                    Red/Purple(w)
+                    <div
+                      *ngIf="progress.value.chest_press_band > 1.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.0">
+                    White
+                    <div
+                      *ngIf="progress.value.chest_press_band > 2.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.5">
+                    White(w)
+                    <div
+                      *ngIf="progress.value.chest_press_band > 2.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="3.0">
+                    Light Grey
+                    <div
+                      *ngIf="progress.value.chest_press_band > 3.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="3.5">
+                    Light Grey(w)
+                    <div
+                      *ngIf="progress.value.chest_press_band > 3.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="4.0">
+                    Dark Grey
+                    <div
+                      *ngIf="progress.value.chest_press_band > 4.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="4.5">
+                    Dark Grey(w)
+                    <div
+                      *ngIf="progress.value.chest_press_band > 4.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.0">
+                    Black
+                    <div
+                      *ngIf="progress.value.chest_press_band > 5.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.5">
+                    Black(w)
+                    <div
+                      *ngIf="progress.value.chest_press_band > 5.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="6.0">Elite</option>
+                </select>
+              </div>
+              <div class="line-one line-two">
+                <p>Reps</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="chest_press_reps"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two">
+                <p>Partials</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="chest_press_partials"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two line-three d-block text-center">
+                <p class="w-100 font-weight-bold">
+                  Chest Press Notes
+                </p>
+                <textarea
+                  class="w-100 h-100 border-black"
+                  rows="4"
+                  [(ngModel)]="pushNotes.chest_press_note"
+                  [ngModelOptions]="{ standalone: true }"
+                ></textarea>
+                <button
+                  class="btn btn-primary mt-2"
+                  type="button"
+                  *ngIf="pushNotes.chest_press_note !== prevPushNotes.chest_press_note"
+                  (click)="updateX3PushNotes()"
+                >
+                  Add Notes
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 mx-auto col-sm-12">
+            <h2>Squat</h2>
+            <div class="form-data">
+              <div class="line-one">
+                <p>band</p>
+                <select
+                  class="custom-select drop-arrow border-black"
+                  formControlName="squat_band"
+                >
+                  <option value="0">
+                    Orange
+                    <div
+                      *ngIf="progress.value.squat_band > 0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="0.5">
+                    Orange(w)
+                    <div
+                      *ngIf="progress.value.squat_band > 0.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.0">
+                    Red/Purple
+                    <div
+                      *ngIf="progress.value.squat_band > 1.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.5">
+                    Red/Purple(w)
+                    <div
+                      *ngIf="progress.value.squat_band > 1.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.0">
+                    White
+                    <div
+                      *ngIf="progress.value.squat_band > 2.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.5">
+                    White(w)
+                    <div
+                      *ngIf="progress.value.squat_band > 2.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="3.0">
+                    Light Grey
+                    <div
+                      *ngIf="progress.value.squat_band > 3.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="3.5">
+                    Light Grey(w)
+                    <div
+                      *ngIf="progress.value.squat_band > 3.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="4.0">
+                    Dark Grey
+                    <div
+                      *ngIf="progress.value.squat_band > 4.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="4.5">
+                    Dark Grey(w)
+                    <div
+                      *ngIf="progress.value.squat_band > 4.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.0">
+                    Black
+                    <div
+                      *ngIf="progress.value.squat_band > 5.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.5">
+                    Black(w)
+                    <div
+                      *ngIf="progress.value.squat_band > 5.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="6.0">Elite</option>
+                </select>
+              </div>
+              <div class="line-one line-two">
+                <p>Reps</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="squat_reps"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two">
+                <p>Partials</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="squat_partials"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two line-three d-block text-center">
+                <p class="w-100 font-weight-bold">
+                  Squat Notes
+                </p> 
+                <textarea
+                  class="w-100 h-100 border-black"
+                  rows="4"
+                  [(ngModel)]="pushNotes.squat_note"
+                  [ngModelOptions]="{ standalone: true }"
+                ></textarea>
+                <button
+                  class="btn btn-primary mt-2"
+                  type="button"
+                  *ngIf="pushNotes.squat_note !== prevPushNotes.squat_note"
+                  (click)="updateX3PushNotes()"
+                >
+                  Add Notes 
+                </button>
+              </div>
+            </div>
+            
+          </div>
+          <div class="col-lg-4 col-md-6 mx-auto col-sm-12">
+            <h2>Overhead Press (Upright Row)</h2>
+            <div class="form-data">
+              <div class="line-one">
+                <p>band</p>
+                <select
+                  class="custom-select drop-arrow border-black"
+                  formControlName="overhead_press_band"
+                >
+                  <option value="0">
+                    Orange
+                    <div
+                      *ngIf="progress.value.overhead_press_band > 0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="0.5">
+                    Orange(w)
+                    <div
+                      *ngIf="progress.value.overhead_press_band > 0.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.0">
+                    Red/Purple
+                    <div
+                      *ngIf="progress.value.overhead_press_band > 1.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.5">
+                    Red/Purple(w)
+                    <div
+                      *ngIf="progress.value.overhead_press_band > 1.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.0">
+                    White
+                    <div
+                      *ngIf="progress.value.overhead_press_band > 2.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.5">
+                    White(w)
+                    <div
+                      *ngIf="progress.value.overhead_press_band > 2.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="3.0">
+                    Light Grey
+                    <div
+                      *ngIf="progress.value.overhead_press_band > 3.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="3.5">
+                    Light Grey(w)
+                    <div
+                      *ngIf="progress.value.overhead_press_band > 3.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="4.0">
+                    Dark Grey
+                    <div
+                      *ngIf="progress.value.overhead_press_band > 4.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="4.5">
+                    Dark Grey(w)
+                    <div
+                      *ngIf="progress.value.overhead_press_band > 4.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.0">
+                    Black
+                    <div
+                      *ngIf="progress.value.overhead_press_band > 5.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.5">
+                    Black(w)
+                    <div
+                      *ngIf="progress.value.overhead_press_band > 5.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="6.0">Elite</option>
+                </select>
+              </div>
+              <div class="line-one line-two">
+                <p>Reps</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="overhead_press_reps"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two">
+                <p>Partials</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="overhead_press_partials"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two line-three d-block text-center">
+                <p class="w-100 font-weight-bold">
+                  Overhead Press Notes
+                </p>
+                <textarea
+                  class="w-100 h-100 border-black"
+                  rows="4"
+                  [(ngModel)]="pushNotes.overhead_press_note"
+                  [ngModelOptions]="{ standalone: true }"
+                ></textarea>
+                <button
+                  class="btn btn-primary mt-2"
+                  type="button"
+                  *ngIf="pushNotes.overhead_press_note !== prevPushNotes.overhead_press_note"
+                  (click)="updateX3PushNotes()"
+                >
+                  Add Notes
+                </button>
+              </div>
+            </div>
+            
+          </div>
+          <div class="col-lg-4 col-md-6 mx-auto col-sm-12">
+            <h2>Tricep Push</h2>
+            <div class="form-data">
+              <div class="line-one">
+                <p>band</p>
+                <select
+                  class="custom-select drop-arrow border-black"
+                  formControlName="tricep_push_band"
+                >
+                  <option value="0">
+                    Orange
+                    <div
+                      *ngIf="progress.value.tricep_push_band > 0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="0.5">
+                    Orange(w)
+                    <div
+                      *ngIf="progress.value.tricep_push_band > 0.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.0">
+                    Red/Purple
+                    <div
+                      *ngIf="progress.value.tricep_push_band > 1.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.5">
+                    Red/Purple(w)
+                    <div
+                      *ngIf="progress.value.tricep_push_band > 1.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.0">
+                    White
+                    <div
+                      *ngIf="progress.value.tricep_push_band > 2.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.5">
+                    White(w)
+                    <div
+                      *ngIf="progress.value.tricep_push_band > 2.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="3.0">
+                    Light Grey
+                    <div
+                      *ngIf="progress.value.tricep_push_band > 3.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="3.5">
+                    Light Grey(w)
+                    <div
+                      *ngIf="progress.value.tricep_push_band > 3.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="4.0">
+                    Dark Grey
+                    <div
+                      *ngIf="progress.value.tricep_push_band > 4.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="4.5">
+                    Dark Grey(w)
+                    <div
+                      *ngIf="progress.value.tricep_push_band > 4.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.0">
+                    Black
+                    <div
+                      *ngIf="progress.value.tricep_push_band > 5.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.5">
+                    Black(w)
+                    <div
+                      *ngIf="progress.value.tricep_push_band > 5.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="6.0">Elite</option>
+                </select>
+              </div>
+              <div class="line-one line-two">
+                <p>Reps</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="tricep_push_reps"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two">
+                <p>Partials</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="tricep_push_partials"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two line-three d-block text-center">
+                <p class="w-100 font-weight-bold">
+                  Tricep Push Notes
+                </p>
+                <textarea
+                  class="w-100 h-100 border-black"
+                  rows="4"
+                  [(ngModel)]="pushNotes.tricep_push_note"
+                  [ngModelOptions]="{ standalone: true }"
+                ></textarea>
+                <button
+                  class="btn btn-primary mt-2"
+                  type="button"
+                  *ngIf="pushNotes.tricep_push_note !== prevPushNotes.tricep_push_note"
+                  (click)="updateX3PushNotes()"
+                >
+                  Add Notes
+                </button>
+              </div>
+            </div>
+            
+          </div>
+          <div class="col-lg-4 col-md-6 mx-auto col-sm-12">
+            <h2>Chest Flys</h2>
+            <div class="form-data">
+              <div class="line-one">
+                <p>band</p>
+                <select
+                  class="custom-select drop-arrow border-black"
+                  formControlName="chest_flys_band"
+                >
+                  <option value="0">
+                    Orange
+                    <div
+                      *ngIf="progress.value.chest_flys_band > 0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="0.5">
+                    Orange(w)
+                    <div
+                      *ngIf="progress.value.chest_flys_band > 0.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.0">
+                    Red/Purple
+                    <div
+                      *ngIf="progress.value.chest_flys_band > 1.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.5">
+                    Red/Purple(w)
+                    <div
+                      *ngIf="progress.value.chest_flys_band > 1.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.0">
+                    White
+                    <div
+                      *ngIf="progress.value.chest_flys_band > 2.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.5">
+                    White(w)
+                    <div
+                      *ngIf="progress.value.chest_flys_band > 2.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="3.0">
+                    Light Grey
+                    <div
+                      *ngIf="progress.value.chest_flys_band > 3.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="3.5">
+                    Light Grey(w)
+                    <div
+                      *ngIf="progress.value.chest_flys_band > 3.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="4.0">
+                    Dark Grey
+                    <div
+                      *ngIf="progress.value.chest_flys_band > 4.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="4.5">
+                    Dark Grey(w)
+                    <div
+                      *ngIf="progress.value.chest_flys_band > 4.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.0">
+                    Black
+                    <div
+                      *ngIf="progress.value.chest_flys_band > 5.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.5">
+                    Black(w)
+                    <div
+                      *ngIf="progress.value.chest_flys_band > 5.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="6.0">Elite</option>
+                </select>
+              </div>
+              <div class="line-one line-two">
+                <p>Reps</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="chest_flys_reps"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two">
+                <p>Partials</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="chest_flys_partials"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two line-three d-block text-center">
+                <p class="w-100 font-weight-bold">
+                  Chest Flys Notes
+                </p>
+                <textarea
+                  class="w-100 h-100 border-black"
+                  rows="4"
+                  [(ngModel)]="pushNotes.chest_flys_note"
+                  [ngModelOptions]="{ standalone: true }"
+                ></textarea>
+                <button
+                  class="btn btn-primary mt-2"
+                  type="button"
+                  *ngIf="pushNotes.chest_flys_note !== prevPushNotes.chest_flys_note"
+                  (click)="updateX3PushNotes()"
+                >
+                  Add Notes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="save">
+          <button class="btn btn-lg" type="submit">Save Push Day</button>
+        </div>
+      </form>
+      <form [formGroup]="progressPull" (submit)="handleProgressPullForm()">
+        <div class="row push_day pull_day my-5 mx-0">
+          <div class="col-lg-4 col-md-6 mx-auto col-sm-12">
+            <h2>Dead Lift</h2>
+            <div class="form-data">
+              <div class="line-one">
+                <p>band</p>
+                <select
+                  class="custom-select drop-arrow border-black"
+                  formControlName="dead_lift_band"
+                >
+                  <option value="0">
+                    Orange
+                    <div
+                      *ngIf="progressPull.value.dead_lift_band > 0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="0.5">
+                    Orange(w)
+                    <div
+                      *ngIf="progressPull.value.dead_lift_band > 0.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.0">
+                    Red/Purple
+                    <div
+                      *ngIf="progressPull.value.dead_lift_band > 1"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.5">
+                    Red/Purple(w)
+                    <div
+                      *ngIf="progressPull.value.dead_lift_band > 1.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.0">
+                    White
+                    <div
+                      *ngIf="progressPull.value.dead_lift_band > 2"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.5">
+                    White(w)
+                    <div
+                      *ngIf="progressPull.value.dead_lift_band > 2.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="3.0">
+                    Light Grey
+                    <div
+                      *ngIf="progressPull.value.dead_lift_band > 3"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="3.5">
+                    Light Grey(w)
+                    <div
+                      *ngIf="progressPull.value.dead_lift_band > 3.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="4.0">
+                    Dark Grey
+                    <div
+                      *ngIf="progressPull.value.dead_lift_band > 4"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="4.5">
+                    Dark Grey(w)
+                    <div
+                      *ngIf="progressPull.value.dead_lift_band > 4.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.0">
+                    Black
+                    <div
+                      *ngIf="progressPull.value.dead_lift_band > 5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.5">
+                    Black(w)
+                    <div
+                      *ngIf="progressPull.value.dead_lift_band > 5.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="6.0">Elite</option>
+                </select>
+              </div>
+              <div class="line-one line-two">
+                <p>Reps</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="dead_lift_reps"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two">
+                <p>Partials</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="dead_lift_partials"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two line-three d-block text-center">
+                <p class="w-100 font-weight-bold">
+                  Dead Lift Notes
+                </p>
+                <textarea
+                  class="w-100 h-100 border-black"
+                  rows="4"
+                  [(ngModel)]="pullNotes.dead_lift_note"
+                  [ngModelOptions]="{ standalone: true }"
+                ></textarea>
+                <button
+                  class="btn btn-primary mt-2"
+                  type="button"
+                  *ngIf="pullNotes.dead_lift_note !== prevPullNotes.dead_lift_note"
+                  (click)="updateX3PullNotes()"
+                >
+                  Add Notes
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 mx-auto col-sm-12">
+            <h2>Bent Row</h2>
+            <div class="form-data">
+              <div class="line-one">
+                <p>band</p>
+                <select
+                  class="custom-select drop-arrow border-black"
+                  formControlName="bent_row_band"
+                >
+                  <option value="0">
+                    Orange
+                    <div
+                      *ngIf="progressPull.value.bent_row_band > 0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="0.5">
+                    Orange(w)
+                    <div
+                      *ngIf="progressPull.value.bent_row_band > 0.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.0">
+                    Red/Purple
+                    <div
+                      *ngIf="progressPull.value.bent_row_band > 1.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.5">
+                    Red/Purple(w)
+                    <div
+                      *ngIf="progressPull.value.bent_row_band > 1.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.0">
+                    White
+                    <div
+                      *ngIf="progressPull.value.bent_row_band > 2.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.5">
+                    White(w)
+                    <div
+                      *ngIf="progressPull.value.bent_row_band > 2.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="3.0">
+                    Light Grey
+                    <div
+                      *ngIf="progressPull.value.bent_row_band > 3.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="3.5">
+                    Light Grey(w)
+                    <div
+                      *ngIf="progressPull.value.bent_row_band > 3.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="4.0">
+                    Dark Grey
+                    <div
+                      *ngIf="progressPull.value.bent_row_band > 4.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="4.5">
+                    Dark Grey(w)
+                    <div
+                      *ngIf="progressPull.value.bent_row_band > 4.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.0">
+                    Black
+                    <div
+                      *ngIf="progressPull.value.bent_row_band > 5.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.5">
+                    Black(w)
+                    <div
+                      *ngIf="progressPull.value.bent_row_band > 5.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="6.0">Elite</option>
+                </select>
+              </div>
+              <div class="line-one line-two">
+                <p>Reps</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="bent_row_reps"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two">
+                <p>Partials</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="bent_row_partials"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two line-three d-block text-center">
+                <p class="w-100 font-weight-bold">
+                  Bent Row Notes
+                </p>
+                <textarea
+                  class="w-100 h-100 border-black"
+                  rows="4"
+                  [(ngModel)]="pullNotes.bent_row_note"
+                  [ngModelOptions]="{ standalone: true }"
+                ></textarea>
+                <button
+                  class="btn btn-primary mt-2"
+                  type="button"
+                  *ngIf="pullNotes.bent_row_note !== prevPullNotes.bent_row_note"
+                  (click)="updateX3PullNotes()"
+                >
+                  Add Notes
+                </button>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 mx-auto col-sm-12">
+            <h2>Bicep Curl</h2>
+            <div class="form-data">
+              <div class="line-one">
+                <p>band</p>
+                <select
+                  class="custom-select drop-arrow border-black"
+                  formControlName="bicep_curl_band"
+                >
+                  <option value="0">
+                    Orange
+                    <div
+                      *ngIf="progressPull.value.bicep_curl_band > 0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="0.5">
+                    Orange(w)
+                    <div
+                      *ngIf="progressPull.value.bicep_curl_band > 0.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.0">
+                    Red/Purple
+                    <div
+                      *ngIf="progressPull.value.bicep_curl_band > 1.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.5">
+                    Red/Purple(w)
+                    <div
+                      *ngIf="progressPull.value.bicep_curl_band > 1.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.0">
+                    White
+                    <div
+                      *ngIf="progressPull.value.bicep_curl_band > 2.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.5">
+                    White(w)
+                    <div
+                      *ngIf="progressPull.value.bicep_curl_band > 2.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="3.0">
+                    Light Grey
+                    <div
+                      *ngIf="progressPull.value.bicep_curl_band > 3.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="3.5">
+                    Light Grey(w)
+                    <div
+                      *ngIf="progressPull.value.bicep_curl_band > 3.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="4.0">
+                    Dark Grey
+                    <div
+                      *ngIf="progressPull.value.bicep_curl_band > 4.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="4.5">
+                    Dark Grey(w)
+                    <div
+                      *ngIf="progressPull.value.bicep_curl_band > 4.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.0">
+                    Black
+                    <div
+                      *ngIf="progressPull.value.bicep_curl_band > 5.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.5">
+                    Black(w)
+                    <div
+                      *ngIf="progressPull.value.bicep_curl_band > 5.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="6.0">Elite</option>
+                </select>
+              </div>
+              <div class="line-one line-two">
+                <p>Reps</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="bicep_curl_reps"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two">
+                <p>Partials</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="bicep_curl_partials"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two line-three d-block text-center">
+                <p class="w-100 font-weight-bold">
+                  Bicep Curl Notes
+                </p>
+                <textarea
+                  class="w-100 h-100 border-black"
+                  rows="4"
+                  [(ngModel)]="pullNotes.bicep_curl_note"
+                  [ngModelOptions]="{ standalone: true }"
+                ></textarea>
+                <button
+                  class="btn btn-primary mt-2"
+                  type="button"
+                  *ngIf="pullNotes.bicep_curl_note !== prevPullNotes.bicep_curl_note"
+                  (click)="updateX3PullNotes()"
+                >
+                  Add Notes
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 mx-auto col-sm-12">
+            <h2>Calf Raise</h2>
+            <div class="form-data">
+              <div class="line-one">
+                <p>band</p>
+                <select
+                  class="custom-select drop-arrow border-black"
+                  formControlName="calf_raise_band"
+                >
+                  <option value="0">
+                    Orange
+                    <div
+                      *ngIf="progressPull.value.calf_raise_band > 0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="0.5">
+                    Orange(w)
+                    <div
+                      *ngIf="progressPull.value.calf_raise_band > 0.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.0">
+                    Red/Purple
+                    <div
+                      *ngIf="progressPull.value.calf_raise_band > 1.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="1.5">
+                    Red/Purple(w)
+                    <div
+                      *ngIf="progressPull.value.calf_raise_band > 1.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.0">
+                    White
+                    <div
+                      *ngIf="progressPull.value.calf_raise_band > 2.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="2.5">
+                    White(w)
+                    <div
+                      *ngIf="progressPull.value.calf_raise_band > 2.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="3.0">
+                    Light Grey
+                    <div
+                      *ngIf="progressPull.value.calf_raise_band > 3.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="3.5">
+                    Light Grey(w)
+                    <div
+                      *ngIf="progressPull.value.calf_raise_band > 3.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+
+                  <option value="4.0">
+                    Dark Grey
+                    <div
+                      *ngIf="progressPull.value.calf_raise_band > 4.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="4.5">
+                    Dark Grey(w)
+                    <div
+                      *ngIf="progressPull.value.calf_raise_band > 4.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.0">
+                    Black
+                    <div
+                      *ngIf="progressPull.value.calf_raise_band > 5.0"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="5.5">
+                    Black(w)
+                    <div
+                      *ngIf="progressPull.value.calf_raise_band > 5.5"
+                      id="Tick"
+                      style="color: green"
+                    >
+                      ✔️
+                    </div>
+                  </option>
+                  <option value="6.0">Elite</option>
+                </select>
+              </div>
+              <div class="line-one line-two">
+                <p>Reps</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="calf_raise_reps"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two">
+                <p>Partials</p>
+                <input
+                  type="number"
+                  class="form-control border-0 grey border-black"
+                  formControlName="calf_raise_partials"
+                  placeholder="0"
+                  id=""
+                  (click)="$event.target.select()"
+                />
+              </div>
+              <div class="line-one line-two line-three d-block text-center">
+                <p class="w-100 font-weight-bold">
+                  Calf Raise Notes
+                </p>
+                <textarea
+                  class="w-100 h-100 border-black"
+                  rows="4"
+                  [(ngModel)]="pullNotes.calf_raise_note"
+                  [ngModelOptions]="{ standalone: true }"
+                ></textarea>
+                <button
+                  class="btn btn-primary mt-2"
+                  type="button"
+                  *ngIf="pullNotes.calf_raise_note !== prevPullNotes.calf_raise_note"
+                  (click)="updateX3PullNotes()"
+                >
+                  Add Notes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="save">
+          <button class="btn btn-lg" type="submit">Save Pull Day</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="new-note my-5 mx-0">
+      <h4 class="ml-3">
+        New Note
+        <span *ngIf="user && user.name"
+          >for {{ user.name }}
+          {{ user.phone_number }}
+        </span>
+      </h4>
+      <form [formGroup]="note" (submit)="handleNoteForm()">
+        <div class="d-flex message mt-3">
+          <div>
+            <input
+              type="text"
+              readonly
+              [value]="coach"
+              style="border: 1px solid darkslategrey"
+            />
+            <div
+              class="custom-control custom-checkbox mb-3"
+              style="border: 1px solid darkslategrey"
+            >
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="customCheck"
+                formControlName="highlightedNote"
+              />
+              <label class="custom-control-label padding-3" for="customCheck"
+                >Highlight note</label
+              >
+            </div>
+          </div>
+
+          <div class="w-100">
+            <textarea
+              id=""
+              formControlName="note_for_patient"
+              cols="30"
+              rows="5"
+              style="border: 1px solid darkslategrey"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="add text-center">
+          <button type="submit" class="btn text-white my-4" *ngIf="note.valid">
+            Add notes now
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-12">
+        <div class="col-12">
+          <p class="mb-0 notes">All Notes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div *ngIf="spinner" class="spinners">
+    <mat-spinner></mat-spinner>
+  </div> -->
+  <div class="row tab-data">
+    <div class="col-12" id="table_change">
+      <div class="tbl-border table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="br-1 table_date">Date</th>
+              <th class="br-1 table_coach">Coach</th>
+              <th class="br-1 table_notes">Notes</th>
+              <th class="head_custom">Update</th>
+            </tr>
+          </thead>
+          <tbody id="style-3" class="tbody">
+            <tr>
+              <td colspan="3" class="w-100">
+                <div class="doctor-table">
+                  <table class="table">
+                    <tr *ngFor="let note of allNotes">
+                      <td class="br-1 table_date">
+                        {{ note.created | date }}
+                      </td>
+                      <td class="br-1 table_coach">
+                        {{ note.coach_name }}
+                      </td>
+                      <td
+                        class="br-1"
+                        style="
+                          overflow: hidden;
+                          overflow-wrap: anywhere;
+                          white-space: pre-line;
+                        "
+                        width="76%"
+                      >
+                        {{ note.text }}
+                      </td>
+                      <td class="br-1 edit_exit_btns">
+                        <button
+                          class="mt-2 btn btn-outline-danger"
+                          type="button"
+                          (click)="getAllNoteId(note.id)"
+                          data-toggle="modal"
+                          data-target="#deleteAllNote"
+                        >
+                          X
+                        </button>
+                        <button
+                          style="margin-left: 10px"
+                          class="mt-2 ml-custom btn btn-outline-primary"
+                          type="button"
+                          (click)="
+                            getNote1(
+                              note.id,
+                              note.created,
+                              note.text,
+                              note.coach_name
+                            )
+                          "
+                          data-toggle="modal"
+                          data-target="#editNote"
+                        >
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="editNote"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document" style="padding-top: 60px">
+    <div class="modal-content" style="border-radius: 0px !important">
+      <div class="modal-body text-center">
+        <h5 class="text-center font-weight-bold">Update Note</h5>
+        <form [formGroup]="updateNotesForm" (submit)="UpdateNotes()">
+          <textarea
+            class="form-control"
+            formControlName="notes"
+            rows="3"
+            style="border-color: darkslategrey"
+            [ngClass]="{
+              'is-invalid': submitted && updateNotesForm.get('notes').invalid
+            }"
+          ></textarea>
+          <div class="invalid-feedback">
+            <div>Note is required</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 mt-3">
+              <label class="font-weight-bold">Coach Name</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="coach"
+                style="background: #f6f7fa; border-color: darkslategrey"
+                [ngClass]="{
+                  'is-invalid':
+                    submitted && updateNotesForm.get('coach').invalid
+                }"
+              />
+              <div class="invalid-feedback">
+                <div>Coach Name is required</div>
+              </div>
+            </div>
+            <div class="col-lg-6 mt-3">
+              <label class="font-weight-bold">Date</label>
+              <input
+                type="datetime-local"
+                class="form-control"
+                formControlName="date"
+                style="background: #f6f7fa; border-color: darkslategrey"
+                [ngClass]="{
+                  'is-invalid': submitted && updateNotesForm.get('date').invalid
+                }"
+              />
+              <div class="invalid-feedback">
+                <div>Date is required</div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="modal-footer mx-auto"
+            style="border-top: none; justify-content: center"
+          >
+            <button type="submit" class="btn btn-outline-success">Yes</button>
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              data-dismiss="modal"
+            >
+              No
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HighlightedNote -->
+<div
+  style="padding-top: 55px"
+  class="modal fade"
+  id="deleteHighlightedNote"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 0px !important">
+      <div class="modal-body text-center">
+        <h5 style="font-size: 20px; font-weight: 400">
+          Are you sure you want to delete this note?
+        </h5>
+      </div>
+      <div class="modal-footer mx-auto" style="border-top: none">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          (click)="deleteHighlightedNote()"
+          data-dismiss="modal"
+        >
+          Yes
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          data-dismiss="modal"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HighlightedNote -->
+<div
+  style="padding-top: 55px"
+  class="modal fade"
+  id="deleteAllNote"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 0px !important">
+      <div class="modal-body text-center">
+        <h5 style="font-size: 20px; font-weight: 400">
+          Are you sure you want to delete this note?
+        </h5>
+      </div>
+      <div class="modal-footer mx-auto" style="border-top: none">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          (click)="deleteAllNote()"
+          data-dismiss="modal"
+        >
+          Yes
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          data-dismiss="modal"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio #audioElement class="d-none">
+  <source src="../../../assets/audios/x3-audio-cue.mp3" type="audio/mpeg" />
+</audio>

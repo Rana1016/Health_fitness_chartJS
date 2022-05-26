@@ -1,0 +1,32 @@
+.checkInModal{
+    .modal-dialog{
+        .modal-content{
+            background-color: #e9e26f;
+            border-radius: 20px !important;
+            width: 450px;
+            min-height: 450px;
+            margin: 0 auto;
+            border: 10px solid;
+            h2{
+                font-size: 30px;
+            }
+            .desc{
+                font-size: 22px;
+                word-wrap: break-word;
+            }
+            .modal-footer{
+                border-top:none;
+                .btn{
+                    width: 80%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: auto;
+                    color: #fff;
+                    font-size: 20px;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+}

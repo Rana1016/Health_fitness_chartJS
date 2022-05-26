@@ -1,0 +1,140 @@
+<div class="container mt-3">
+  <form (submit)="handleFormSubmit()">
+    <div class="row">
+      <div class="col-md-6 line justify-content-center">
+        <p class="text-center font-weight-bold my-auto">Enter Calendar Id</p>
+        <input
+          type="text"
+          class="grey form-control w-50 ml-3"
+          [formControl]="acuityForm"
+          [ngClass]="{'is-invalid':submittedError != ''}"
+        />
+      </div>
+      <div class="col-md-6 my-auto">
+        <button type="submit" class="btn btn-primary">Validate</button>
+      </div>
+      <div class="col-md-6">
+        <div class="invalid-feedback text-center ml-2 d-block" *ngIf="submittedError != ''">
+          <div>{{submittedError}}</div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="row">
+    <div class="col-12" id="table_change">
+      <div class="tbl-border table-responsive">
+        <div class="table mb-0">
+          <table class="mb-0">
+            <thead>
+              <tr>
+                <th class="br-1">Calendar Name</th>
+                <th class="br-1">Calendar Id</th>
+                <th>Display Buffer</th>
+                <th class="head_custom">Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of locationCalendarIds | keyvalue; let i = index">
+                <td>{{ item.value.name }}</td>
+                <td>
+                  <div class="d-flex justify-content-between">
+                    <span *ngIf="item.value.input_field == false">{{item.value.id}}</span>
+                    <input
+                      *ngIf="item.value.input_field"
+                      class="form-control grey"
+                      [(ngModel)]="item.value.id"
+                      [readOnly]="item.value.input_field == false"
+                      [ngModelOptions]="{ standalone: true }"
+                      [ngClass]="{'is-invalid':item.value.updateError != ''}"
+                    />
+                  </div>
+                  <div class="invalid-feedback d-block ml-1" *ngIf="item.value.updateError != ''">
+                    <div>{{item.value.updateError}}</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex justify-content-between">
+                    <span *ngIf="item.value.input_field == false">{{item.value.delay_time}}</span>
+                    <input
+                      *ngIf="item.value.input_field"
+                      class="form-control grey ml-2"
+                      [(ngModel)]="item.value.delay_time"
+                      [readOnly]="item.value.input_field == false"
+                      [ngModelOptions]="{ standalone: true }"
+                    />
+                  </div>
+                  <div class="invalid-feedback d-block ml-1" *ngIf="item.value.updateError != ''">
+                    <div>{{item.value.updateError}}</div>
+                  </div>
+                </td>
+                <td>
+                  <button
+                    class="btn btn-outline-danger"
+                    data-toggle="modal"
+                    data-target="#deleteId"
+                    (click)="setDeleteId(item.value.id)"
+                  >
+                    X
+                  </button>
+                  <button
+                    [ngClass]="{'active':item.value.input_field}"
+                    class="btn btn-outline-primary ml-2"
+                    (click)="setUpdateValue(i)"
+                    *ngIf="!item.value.input_field"
+                  >
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                  <button
+                    [ngClass]="{'active':item.value.input_field}"
+                    class="btn btn-outline-primary ml-2"
+                    (click)="updateId(i, item.value.id)"
+                    *ngIf="item.value.input_field"
+                  >
+                    <i class="fa fa-save"></i>
+                  </button>
+                </td>
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="modal fade"
+  id="deleteId"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 0px !important">
+      <div class="modal-body text-center">
+        <h5>Are you sure you want to delete this Calendar Id?</h5>
+      </div>
+      <div class="modal-footer mx-auto" style="border-top: none">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          (click)="deleteId()"
+          data-dismiss="modal"
+        >
+          Yes
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          data-dismiss="modal"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

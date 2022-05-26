@@ -1,0 +1,168 @@
+<div class="">
+  <div class="row">
+    <div class="col-11 mx-auto my-3">
+      <div class="tbl-border table-responsive">
+        <div class="table">
+          <table>
+            <thead>
+              <tr>
+                <th class="br-1 table_date">On check-in number</th>
+                <th class="br-1 table_coach">Do this</th>
+                <th class="br-1 table_notes">Message</th>
+                <th class="head_custom">Update</th>
+              </tr>
+            </thead>
+            <tbody id="style-3" class="tbody">
+              <tr *ngFor="let reminder of allReminders">
+                <td class="br-1 padding table_date">
+                  {{ reminder.check_in_number }}
+                </td>
+                <td class="br-1 padding table_coach">
+                  {{ reminder.action }}
+                </td>
+                <td class="br-1 padding table_notes" style="
+                overflow: hidden;
+                overflow-wrap: anywhere;
+                white-space:pre-line;
+              ">
+                  {{ reminder.message }}
+                </td>
+                <td class="br-1 padding edit_exit_btns">
+                  <button
+                    class="mt-2 btn btn-outline-danger"
+                    type="button"
+                    style="height: fit-content;"
+                    data-toggle="modal"
+                    data-target="#reminderDelete"
+                    (click)="deleteRemider(reminder.id)"
+                  >
+                    X
+                  </button>
+                  <button
+                    class="mt-2 ml-custom btn btn-outline-primary"
+                    type="button"
+                    style="height: fit-content;"
+                    (click)="updateReminder(reminder)"
+                  >
+                    Edit
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center">
+    <button
+      class="addnew text-center btn rounded-pill text-white"
+      (click)="addNewEntry()"
+    >
+      Add New Entry
+    </button>
+  </div>
+</div>
+
+<!-- Add New Entry -->
+<div
+  class="modal fade"
+  id="AddNewReminder"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div
+      class="modal-content addnewentry"
+      style="border-radius: 25px !important"
+    >
+      <div class="modal-body text-center">
+        <h5>{{ formTitle }}</h5>
+        <form [formGroup]="addReminderForm" (submit)="updateReminderData()">
+          <div class="row">
+            <div class="col-12">
+              <label class="mb-0 mt-3">On check-in number</label>
+              <input
+                type="number"
+                class="mb-3 grey form-control"
+                formControlName="checkInNumber"
+                [ngClass]="{
+                  'is-invalid':
+                    submitted && getReminderFormData.checkInNumber.errors
+                }"
+              />
+              <div class="invalid-feedback text-left">
+                <div>Check-In Number is Required</div>
+              </div>
+
+              <select
+                class="custom-select grey mr-sm-2 b-25"
+                formControlName="selectModule"
+              >
+                <option value="Levelup Popup" selected>Levelup Popup</option>
+              </select>
+
+              <label class="mb-0 mt-3">Message</label>
+              <textarea
+                class="form-control b-25"
+                rows="3"
+                formControlName="message"
+                id="textarea"
+                [ngClass]="{
+                  'is-invalid': submitted && getReminderFormData.message.errors
+                }"
+              ></textarea>
+              <div class="invalid-feedback">
+                <div>Message is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12 px-0 text-center">
+              <button class="btn btn-outline-primary b-25" type="submit">
+                {{ formTitle }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- reminderDelete -->
+<div
+  class="modal fade"
+  id="reminderDelete"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 0px !important">
+      <div class="modal-body text-center">
+        <h5>Are you sure you want to delete this check-in reminder?</h5>
+      </div>
+      <div class="modal-footer mx-auto" style="border-top: none">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          (click)="deleteReminderObject()"
+          data-dismiss="modal"
+        >
+          Yes
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          data-dismiss="modal"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

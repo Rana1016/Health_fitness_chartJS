@@ -1,0 +1,24 @@
+<div class="mt-3">
+    <div class="form-group px-4">
+        <label for="pwd">Select Report</label>
+        <select class="form-control" id="sel1" [formControl]="report" (change)="reportChange()">
+            <option *ngFor="let tab of tabs;let i=index" value="{{tab.id}}">{{tab.title}}</option>
+        </select>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="pt-4 mx-4 overflow-auto">
+                    <table
+                      datatable
+                      *ngIf="dtRendered"
+                      [dtOptions]="dtOptions"
+                      class="row-border hover table table-bordered member-table w-100"
+                      style="border-bottom: 1px solid #dee2e6"
+                    >
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>

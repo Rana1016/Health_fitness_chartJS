@@ -1,0 +1,79 @@
+<div class="main">
+    <div class="blue-bg"></div>
+        <div class="grey-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="login">
+                            <div class="login-card">
+                                <!-- <div class="img">
+                                    <img src="./../../../assets/images/login-img.png" />
+                                </div> -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col pr-0">
+                                            <button type="button" class="btn login-btn active" (click)="toggle_login()" [ngClass]="{ 'active': login_class }">Login</button>
+                                        </div>
+                                        <div class="col pl-0">
+                                            <a  class="btn login-btn " href="http://api.strongaustin.com/admin/" (click)="toggle_reg()" [ngClass]="{ 'active': reg_class }">Registration</a>
+                                        </div>
+                                    </div>
+                                    <div class="alert alert-danger text-center" *ngIf = "error != null">
+                                        <strong>{{error}}</strong>
+                                    </div>
+                                    <form [formGroup] = "loginForm" (submit) = "signIn()">
+                                        <!-- <div> <label for="sel1">Select Your Locations</label></div>
+                                        <div class="input-group form-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><img src="./../../../assets/images/location.png"></span>
+                                            </div>
+                                            <div class="custom-select-wrapper">
+                                                <select class="custom-select">
+                                                    <option value="1">Sanfransisco , California</option>
+                                                    <option value="1">England</option>
+                                                    <option value="2">USA</option>
+                                                </select>
+                                            </div>
+                                        </div> -->
+                                        <div> <label for="sel1">Your Email:</label></div>
+                                        <div class="input-group form-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><img src="./../../../assets/images/mail.png"></span>
+                                            </div>                                        
+                                            <input type="email" formControlName="userName"   (change)="fixAutoFill($event, pwd.value)"  class="form-control input" placeholder="Example123@gmail.com" [ngClass]="{ 'is-invalid': submitted && loginForm.get('userName').invalid }" />
+                                         <div class="invalid-feedback" *ngIf="submitted && loginForm.get('userName').invalid">
+                                             <div *ngIf="loginForm.get('userName').errors.required">Email is required</div>
+                                             <div *ngIf="loginForm.get('userName').errors.pattern">Must be valid Email Address</div>
+                                         </div>
+                                        </div>
+                                        <div> <label for="sel1">Enter Password:</label></div>
+                                        <div class="input-group form-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><img src="./../../../assets/images/lock.png"></span>
+                                            </div>
+                                            <input type="password"  #pwd class="form-control input" placeholder="********" formControlName = "password" [ngClass]="{ 'is-invalid': submitted && loginForm.get('password').invalid }">
+                                            <div class="invalid-feedback" *ngIf="submitted && loginForm.get('password').invalid">
+                                                <div *ngIf="loginForm.get('password').errors.required">Password is required</div>
+                                                <div *ngIf="loginForm.get('password').errors.minlength">Password must be atleast 6 characters</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck" name="example1" formControlName = "rememberMe" [checked]='true'>
+                                            <label class="custom-control-label padding-3" for="customCheck">Remember My Info</label>
+                                        </div>
+                                        <a [routerLink]="['forgot-password']" >Forgot your Password?</a>
+                                        <div class="form-group btn-pos">
+                                            <button class="btn w-100 login-now" type="submit" value="login" >Login Now </button>
+                                            <img src="./../../../assets/images/right-arrow.png"/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</div>

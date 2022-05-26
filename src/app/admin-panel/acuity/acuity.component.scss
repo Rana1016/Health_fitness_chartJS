@@ -1,0 +1,154 @@
+.line {
+  display: flex;
+  align-items: center;
+  padding: 12px 12px 12px 15px;
+  .grey {
+    background-color: #f6f7fa;
+    border: 1px solid black;
+  }
+}
+
+.grey {
+  background-color: #f6f7fa;
+  border: 1px solid black;
+}
+
+
+input:read-only {
+  &:focus {
+    box-shadow: none;
+  }
+  background-color: transparent !important;
+}
+
+.table {
+  table{
+      width: 100%;
+      margin-bottom: 1rem;
+      color: #212529;
+      thead {
+          th {
+              font-weight: 100;
+              color: #929296;
+              vertical-align: bottom;
+              padding: 18px 20px 12px !important;
+              border-bottom: 1px solid #dddee1;
+              border-top: 0;
+              font-family: TTCommons-Regular;
+          }
+      }
+      td {
+          border: none;
+          padding: 0px 0px 0px 0px;
+
+      }
+  }
+}
+.table td{
+  vertical-align: top;
+  border-top: 0px solid #dee2e6;
+  padding: 0.75rem;
+}
+.table th {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 0px solid #dee2e6;
+  border-bottom: 1px solid #dddee1;
+}
+tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.tbl-border {
+  border: 1px solid #dddee1;
+  border-radius: 16px;
+  padding: 0px;
+  thead {
+      th {
+          display: block;
+          // width: 50%;
+          border-right: 1px solid #dddee1;
+
+          &:last-child() {
+              // width: 55%;
+              text-align: center;
+              border-right: none;
+          }
+      }
+      tr {
+          display: flex;
+          width: 100%;
+      }
+  }
+  tbody {
+      td {
+          display: block;
+          // width: 50%;
+          padding: 18px 20px 12px !important;
+          border-right: 1px solid #dddee1;
+        &:last-child{
+          border-right: none;
+        }
+      }
+      tr {
+          display: flex;
+          width: 100%;
+      }
+  }
+}
+
+.tbl-border tbody tr td:last-child {
+  border-right: 0px;
+}
+
+.tbl-border tbody tr,
+.tbl-border thead tr {
+  display: flex;
+  width: 100%;
+}
+
+.tbl-border thead th,
+.tbl-border tbody td {
+  display: block;
+  width: 100%;
+}
+
+.tbl-border thead th:nth-child(3),
+.tbl-border tbody td:nth-child(3) {
+  // width: 55%;
+  text-align: center;
+}
+
+.tbl-border tbody {
+  display: block;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+@media only screen and (max-width: 991px){
+  .tbl-border{
+    .table{
+      width: 765px !important;
+      table{
+        overflow-x: scroll;
+        thead{
+          th{
+            &:nth-child(3){
+              width: 30%;
+            }
+          }
+        }
+        tbody{
+          td{
+            &:nth-child(3){
+              width: 30%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

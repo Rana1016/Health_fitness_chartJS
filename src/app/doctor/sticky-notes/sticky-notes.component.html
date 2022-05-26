@@ -1,0 +1,436 @@
+<!-- sticky Note -->
+<div
+  class="modal fade"
+  id="addNote"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 25px !important">
+      <div class="modal-body">
+        <form [formGroup]="stickyForm" (submit)="sticky_submit()">
+          <h5 class="text-center">
+            Enter a reminder to popup on their next session
+          </h5>
+          <div class="row">
+            <div class="col-12">
+              <select
+                class="custom-select grey mr-sm-2 b-25"
+                *ngIf="preWrittenText && preWrittenText.length > 0"
+                formControlName="selectedSticky"
+                (change)="messageChange($event)"
+              >
+                <option value="0" data-message="0">--Select Message--</option>
+                <option
+                  *ngFor="let message of preWrittenText; let i = index"
+                  [value]="message.id"
+                  [attr.data-message]="message.message"
+                >
+                  {{ message.message }}
+                </option>
+              </select>
+              <textarea
+                class="form-control mt-3 b-25"
+                rows="3"
+                formControlName="stickyMessage"
+                id="textarea"
+                [ngClass]="{
+                  'is-invalid':
+                    submitted && stickyForm.get('stickyMessage').invalid
+                }"
+              ></textarea>
+              <div class="invalid-feedback">
+                <div>Above Field is required</div>
+              </div>
+              <div class="custom-control custom-checkbox mr-sm-2 mt-3">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="user_role_checkbox"
+                  [(ngModel)]="applyToAllMembers"
+                  [ngModelOptions]="{ standalone: true }"
+                  (change)="confirmationPopup($event)"
+                />
+                <label class="custom-control-label" for="user_role_checkbox">
+                  <p style="margin: 2px 1rem">Apply to all members?</p>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-3">
+              <button
+                type="button"
+                class="btn btn-outline-danger b-50 font-weight-bold"
+                data-dismiss="modal"
+              >
+                X
+              </button>
+            </div>
+            <div class="col-6 px-0 text-center">
+              <button
+                class="btn btn-outline-primary b-25"
+                type="button"
+                data-toggle="modal"
+                data-target="#allNotes"
+              >
+                Edit Saved Stickies
+              </button>
+            </div>
+            <div class="col-3 text-right">
+              <button
+                type="submit"
+                class="btn btn-outline-success b-50 font-weight-bold"
+              >
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- All notes -->
+<div
+  class="modal fade"
+  id="allNotes"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog allMessages" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <h5>All Sticky Notes</h5>
+        <div class="row">
+          <div class="text-right col-12">
+            <button
+              class="btn btn-outline-primary"
+              data-toggle="modal"
+              data-target="#addStickyNote"
+            >
+              + sticky note
+            </button>
+          </div>
+          <div class="col-12 mt-3" id="table_change">
+            <div class="tbl-border table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="br-1 table_date">#</th>
+                    <th class="br-1 table_notes">Sticky Note</th>
+                    <th class="br-1 head_custom">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="style-3" class="tbody">
+                  <tr>
+                    <td colspan="3" class="w-100">
+                      <div class="doctor-table">
+                        <table *ngIf="!spinner">
+                          <tr
+                            *ngFor="
+                              let message of preWrittenText;
+                              let i = index
+                            "
+                          >
+                            <td class="br-1 table_date padding">
+                              {{ i + 1 }}
+                            </td>
+
+                            <td
+                              class="br-1 table_notes padding"
+                              style="
+                                overflow: hidden;
+                                overflow-wrap: anywhere; ;
+                              "
+                            >
+                              {{ message.message }}
+                            </td>
+                            <td class="br-1 edit_exit_btns padding">
+                              <button
+                                class="mt-2 btn btn-outline-danger"
+                                type="button"
+                                (click)="getMessageId(message.id, i)"
+                                data-toggle="modal"
+                                data-target="#stickyNoteDelete"
+                              >
+                                X
+                              </button>
+                              <button
+                                class="mt-2 ml-custom btn btn-outline-primary"
+                                type="button"
+                                (click)="
+                                  update_message_form(
+                                    message.message,
+                                    message.id
+                                  )
+                                "
+                                data-toggle="modal"
+                                data-target="#updateNote"
+                              >
+                                Edit
+                              </button>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- addNote -->
+<div
+  class="modal fade"
+  id="addStickyNote"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog addMessage" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form [formGroup]="updatestickyForm" (submit)="add_message_submit()">
+          <h5 class="text-center">Enter a Sticky Note</h5>
+          <div class="row">
+            <div class="col-12">
+              <textarea
+                class="form-control mt-3 b-25"
+                rows="3"
+                formControlName="stickyMessage"
+                id="textarea"
+                [ngClass]="{
+                  'is-invalid':
+                    submitted && updatestickyForm.get('stickyMessage').invalid
+                }"
+              ></textarea>
+              <div class="invalid-feedback">
+                <div>Above Field is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-3">
+              <button
+                type="button"
+                class="btn btn-outline-danger b-50 font-weight-bold"
+                data-dismiss="modal"
+              >
+                X
+              </button>
+            </div>
+            <div class="col-6 px-0 text-center"></div>
+            <div class="col-3 text-right">
+              <button
+                type="submit"
+                class="btn btn-outline-success b-50 font-weight-bold"
+              >
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- updateNote -->
+<div
+  class="modal fade"
+  id="updateNote"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 0px !important">
+      <div class="modal-body">
+        <form [formGroup]="updatestickyForm" (submit)="update_message_submit()">
+          <h5 class="text-center">Update a Sticky Note</h5>
+          <div class="row">
+            <div class="col-12">
+              <textarea
+                class="form-control mt-3 b-25"
+                rows="3"
+                formControlName="stickyMessage"
+                id="textarea"
+                [ngClass]="{
+                  'is-invalid':
+                    submitted && updatestickyForm.get('stickyMessage').invalid
+                }"
+              ></textarea>
+              <div class="invalid-feedback">
+                <div>Above Field is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="row w-100 mt-3">
+            <div class="col-md-3">
+              <button
+                type="button"
+                class="btn btn-outline-danger b-50 font-weight-bold"
+                data-dismiss="modal"
+              >
+                X
+              </button>
+            </div>
+            <div class="col-md-6 text-center"></div>
+            <div class="col-md-3 text-right">
+              <button
+                type="submit"
+                class="btn btn-outline-success b-50 font-weight-bold"
+              >
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- noteDelete -->
+<div
+  class="modal fade"
+  id="stickyNoteDelete"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 0px !important">
+      <div class="modal-body text-center">
+        <h5>Are you sure you want to delete this sticky note?</h5>
+      </div>
+      <div class="modal-footer mx-auto" style="border-top: none">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          (click)="deleteMessage()"
+          data-dismiss="modal"
+        >
+          Yes
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          data-dismiss="modal"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- sticky Note -->
+<div
+  *ngFor="let note of stickyNotes"
+  class="modal myModel fade"
+  id="myStickyNotes{{ note.id }}"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="text-center">
+        <img src="../../../assets/images/pin.png" alt="" />
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <p>{{ note.message }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer text-center">
+        <div class="row w-100">
+          <div class="col-6 text-right">
+            <button
+              type="submit"
+              class="btn btn-success b-25 font-weight-bold btn-lg"
+              data-dismiss="modal"
+              (click)="deleteStickyNotes(note.id,false)"
+            >
+              Snooze
+            </button>
+          </div>
+          <div class="col-6 text-left">
+            <button
+              type="button"
+              class="btn btn-danger b-25 font-weight-bold btn-lg"
+              data-dismiss="modal"
+              (click)="deleteStickyNotes(note.id,true)"
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation Popup -->
+<div
+  class="modal fade"
+  id="confirmationPopup"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 0px !important">
+      <div class="modal-body text-center">
+        <h5>Are you sure you want to apply to all members??</h5>
+      </div>
+      <div class="modal-footer mx-auto" style="border-top: none">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          data-dismiss="modal"
+        >
+          Yes
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          data-dismiss="modal"
+          (click)="discardPublicNote()"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

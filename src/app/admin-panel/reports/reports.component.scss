@@ -1,0 +1,37 @@
+.overflow-auto{
+    overflow: auto;
+}
+table{
+    border-radius: 20px;
+    overflow: hidden;
+    &.dataTable{
+        thead{
+            th{
+                border-bottom: 1px solid #dee2e6;
+                border-top: 0;
+            }
+        } 
+    }
+    th{
+        padding: 18px 20px 12px;
+    }
+    td{
+        border: 0;
+        padding: 18px 20px 12px;
+    }
+    .table_name{
+        width: 25% !important;
+        border-right: 1px solid #dee2e6;
+        border-left: 0;
+    }
+    .table_email{
+        width: 50% !important;
+        border-right: 1px solid #dee2e6;
+        border-left: 0;
+    }
+    .table_update{
+        width: 25%;
+        border-right: 0;
+        border-left: 0;
+    }
+}

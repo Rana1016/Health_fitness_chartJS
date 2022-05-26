@@ -1,0 +1,203 @@
+<div class="main">
+  <div class="yellow-bg"></div>
+  <div class="grey-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="login">
+            <div class="login-card">
+
+              <!-- HAMBURGER START -->
+              <div class="row">
+              <a [routerLink]="['/coach/']" class="col-12 mt-3 text-right">
+                <img class="mr-4" src="https://cdn-icons-png.flaticon.com/512/25/25694.png" width="46px" height="46px"/>
+              </a>
+            </div>
+              <!-- <nav role="navigation">
+                <div id="menuToggle">
+                  <input id="menuToogle" type="checkbox">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <ul id="menu">
+                    <a [routerLink]="['/coach/']">
+                      <div class="input-group" >
+                        <div class="input-group-prepend">
+                          <div class="input-group-text" id="btnGroupAddon">
+                            <img src="./../../../assets/images/add-user.png">
+                          </div>
+                        </div>
+                        <a class="btn p-0">User </a>
+                      </div>
+                    </a>
+                  </ul>
+                </div>
+              </nav> -->
+              <!-- HAMBURGER END -->
+
+              <div class="mt-3">
+                <ul
+                  class="nav nav-pills pills-dark mb-3"
+                  id="pills-tab"
+                  role="tablist"
+                >
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="pills-member-tab"
+                    data-toggle="pill"
+                    href="#pills-member"
+                    role="tab"
+                    aria-controls="pills-member"
+                    aria-selected="true"
+                    >Members
+                  </a>
+                </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link "
+                      id="pills-acuity-tab"
+                      data-toggle="pill"
+                      href="#pills-acuity"
+                      role="tab"
+                      aria-controls="pills-acuity"
+                      aria-selected="true"
+                      >Acuity
+                    </a>
+                  </li>
+                  <li class="nav-item" *ngIf="user.role === 'levelup_admin' || user.role === 'location_admin'">
+                    <a
+                      class="nav-link"
+                      id="pills-baselines-tab"
+                      data-toggle="pill"
+                      href="#pills-baselines"
+                      role="tab"
+                      aria-controls="pills-baselines"
+                      aria-selected="false"
+                      >Baselines
+                    </a>
+                  </li>
+                  <li class="nav-item" *ngIf="user.role === 'levelup_admin' || user.role === 'location_admin'">
+                    <a
+                      class="nav-link"
+                      id="pills-checkin-tab"
+                      data-toggle="pill"
+                      href="#pills-checkin"
+                      role="tab"
+                      aria-controls="pills-checkin"
+                      aria-selected="false"
+                      >Check-in Reminders
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      id="pills-reports-tab"
+                      data-toggle="pill"
+                      href="#pills-reports"
+                      role="tab"
+                      aria-controls="pills-baselines"
+                      aria-selected="false"
+                      >Reports
+                    </a>
+                  </li>
+                  <li class="nav-item" *ngIf="user.role === 'levelup_admin'">
+                    <a
+                      class="nav-link"
+                      id="pills-reports-tab"
+                      data-toggle="pill"
+                      href="#pills-super-admin"
+                      role="tab"
+                      aria-controls="pills-baselines"
+                      aria-selected="false"
+                      >Create New Location
+                    </a>
+                  </li>
+                  <li class="nav-item" *ngIf="user.role === 'levelup_admin'">
+                    <a
+                      class="nav-link"
+                      id="pills-manage-site-tab"
+                      data-toggle="pill"
+                      href="#pills-manage-site"
+                      role="tab"
+                      aria-controls="pills-baselines"
+                      aria-selected="false"
+                      >Manage Site
+                    </a>
+                  </li>
+
+                </ul>
+
+                <div class="tab-content" id="pills-tabContent">
+                  <div
+                    class="tab-pane fade show active"
+                    id="pills-member"
+                    role="tabpanel"
+                    aria-labelledby="pills-member-tab"
+                  >
+                    <app-members></app-members>
+                  </div>
+
+                  <div
+                    class="tab-pane fade"
+                    id="pills-acuity"
+                    role="tabpanel"
+                    aria-labelledby="pills-acuity-tab"
+                  >
+                    <app-acuity [memberId]="id"></app-acuity>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="pills-baselines"
+                    role="tabpanel"
+                    aria-labelledby="pills-baselines-tab"
+                  >
+                    <app-baselines></app-baselines>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="pills-checkin"
+                    role="tabpanel"
+                    aria-labelledby="pills-checkin-tab"
+                  >
+                    <app-check-in-reminders></app-check-in-reminders>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="pills-reports"
+                    role="tabpanel"
+                    aria-labelledby="pills-baselines-tab"
+                  >
+                    <app-reports></app-reports>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="pills-super-admin"
+                    role="tabpanel"
+                    aria-labelledby="pills-baselines-tab"
+                  >
+                    <app-super-admin ></app-super-admin>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="pills-manage-site"
+                    role="tabpanel"
+                    aria-labelledby="pills-baselines-tab"
+                  >
+                    <app-manage-site ></app-manage-site>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center" style="margin-top: 10rem !important">
+                <button class="btn logoutbtn btn-outline-primary btn-lg ml-3 mb-3" type="button"
+                  (click)="logout($event)">
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
